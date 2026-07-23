@@ -1,0 +1,25 @@
+# Backup files
+*_backup.html
+*_backup_v2.html
+
+# OS
+.DS_Store
+
+# Media extraction
+ppt_extract/
+ppt_extracted/
+ppt_images/
+ppt_media/
+
+# Other test files
+3D角色互动.html
+强教动画展示.html
+case1-diff.html
+case2-ease.html
+case3-budget.html
+case4-vision.html
+case4-budget.html
+销售知识库.md
+
+# Node
+node_modules/

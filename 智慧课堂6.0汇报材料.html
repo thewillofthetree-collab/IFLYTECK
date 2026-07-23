@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>科大讯飞智慧课堂 6.0 | 产品介绍</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans SC"', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+          },
+          colors: {
+            brand: { 50: '#f0fdfa', 100: '#ccfbf1', 500: '#14b8a6', 600: '#0d9488', 700: '#0f766e', 900: '#134e4a', 950: '#042f2e' },
+            sand: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4' },
+            coral: { 400: '#fb7185', 500: '#f43f5e', 600: '#e11d48' },
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Microsoft YaHei", sans-serif; background: #fbfbfd; color: #1d1d1f; }
+    .tech-bg { display: none; }
+    .hero-bg { background-image: url('images/hero-bg.png'); background-size: cover; background-position: center; }
+    .glass-card { background: #ffffff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.04); }
+    .glass-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.06); }
+    .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; }
+    .card-hover:hover { transform: translateY(-4px); box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 12px 32px rgba(0,0,0,0.06); }
+    .gradient-text { background: linear-gradient(135deg, #1d9bf0 0%, #0a84ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gradient-text-teal { background: linear-gradient(135deg, #30d158 0%, #64d2ff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .section-number { font-size: 8rem; line-height: 0.8; -webkit-text-stroke: 1px currentColor; -webkit-text-fill-color: transparent; opacity: 0.06; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .nav-scrolled { background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .timeline-line::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: #e5e5ea; transform: translateX(-50%); }
+    .brand-table thead tr { background: #f5f5f7; }
+    .brand-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+    .brand-table td, .brand-table th { border-color: #e5e5ea; }
+    .tag-pill { display: inline-flex; align-items: center; gap: 4px; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .tag-strong { background: rgba(10,132,255,0.1); color: #007aff; }
+    .tag-mid { background: rgba(255,159,10,0.1); color: #ff9f0a; }
+    .text-glow { text-shadow: none; }
+    @media (max-width: 768px) { .timeline-line::before { left: 18px; } .section-number { font-size: 5rem; } }
+    @media print { nav, .no-print { display: none !important; } .reveal { opacity: 1 !important; transform: none !important; } section { break-inside: avoid; } }  </style>
+</head>
+<body class="bg-[#fbfbfd] text-[#1d1d1f] antialiased">
+
+  <!-- ===== Nav ===== -->
+  <nav id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-transparent">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="#hero" class="flex items-center gap-2 font-bold text-lg text-[#1d1d1f] nav-logo transition-colors">
+          <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+          <span>智慧课堂 6.0</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6 text-sm font-medium nav-links text-[#1d1d1f] transition-colors">
+          <a href="#intro" class="hover:text-[#007aff] transition-colors">讯飞介绍</a>
+          <a href="#teacher" class="hover:text-[#007aff] transition-colors">强师</a>
+          <a href="#teach" class="hover:text-[#007aff] transition-colors">强教</a>
+          <a href="#learn" class="hover:text-[#007aff] transition-colors">强学</a>
+          <a href="#diff" class="hover:text-[#007aff] transition-colors">竞品差异</a>
+          <a href="#shanghai" class="hover:text-[#007aff] transition-colors">上海案例分享</a>
+          <a href="#timeline" class="hover:text-[#007aff] transition-colors">智慧课堂发展历程</a>
+          <a href="#ironman" class="hover:text-[#007aff] transition-colors">AI+教育时代的"钢铁侠"</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Hero ===== -->
+  <section id="hero" class="relative min-h-screen flex items-center hero-bg text-white overflow-hidden">
+    <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-40"></div>
+    <div class="relative max-w-7xl mx-auto px-6 lg:px-8 py-32 w-full">
+      <div class="max-w-3xl">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f5f5f7]0/20 border border-sky-400/30 text-[#007aff] text-sm font-medium mb-8 reveal">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          产品介绍 · 2026
+        </div>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-[1.1] mb-8 reveal text-[#1d1d1f]">
+          科大讯飞<br/>智慧课堂 <span class="text-[#007aff]">6.0</span>
+        </h1>
+        <p class="text-2xl sm:text-3xl font-light text-[#1d1d1f] mb-6 reveal">
+          AI 强师 · 强教 · 强学
+        </p>
+                <div class="flex flex-wrap gap-4 reveal">
+          <a href="#intro" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#007aff] hover:bg-[#0066d6] text-white font-semibold transition-all shadow-lg shadow-blue-900/20">
+            了解产品
+            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+          </a>
+          <a href="#shanghai" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border border-[#1d1d1f]/15 hover:bg-[#ffffff]/10 text-white font-medium transition-all">
+            应用成效
+          </a>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-[#aeaeb2] animate-bounce no-print">
+      <i data-lucide="chevron-down" class="w-6 h-6"></i>
+    </div>
+  </section>
+
+  <!-- ===== 讯飞介绍 ===== -->
+  <section id="intro" class="relative py-28 bg-[#ffffff] overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-[#f5f5f7] rounded-full blur-3xl opacity-60 -translate-y-1/2 translate-x-1/3"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">iFLYTEK</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">科大讯飞</h2>
+        <p class="text-lg text-[#aeaeb2] max-w-3xl">科大讯飞是亚太地区知名的智能语音和人工智能上市企业，深耕教育领域二十余年，致力于以 AI 赋能教育数字化转型。</p>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-2.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-3.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-4.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-5.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-6.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-7.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 reveal">
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="building-2" class="w-6 h-6"></i></div>
+          <h3 class="font-bold text-[#1d1d1f] mb-2">企业实力</h3>
+          <p class="text-sm text-[#86868b] leading-relaxed">国家新一代人工智能开放创新平台、认知智能全国重点实验室。蝉联全球中英文语音技术大赛冠军，教育领域专利 2000+。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="graduation-cap" class="w-6 h-6"></i></div>
+          <h3 class="font-bold text-[#1d1d1f] mb-2">教育深耕</h3>
+          <p class="text-sm text-[#86868b] leading-relaxed">2007 年"梦园"启航，覆盖全国 5.8万+ 学校、1700万+ 师生。联合 7 家国家级实验室，承担 67 项教育开放课题。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="sparkles" class="w-6 h-6"></i></div>
+          <h3 class="font-bold text-[#1d1d1f] mb-2">星火大模型</h3>
+          <p class="text-sm text-[#86868b] leading-relaxed">教育专属大模型底座，支持教学全场景智能应用。2023年首批通过备案，教育领域综合评测持续领先。</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+        <div class="text-center p-6 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea]">
+          <div class="text-3xl font-black text-[#007aff] mb-1">5.8万+</div>
+          <div class="text-sm text-[#86868b]">覆盖学校</div>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea]">
+          <div class="text-3xl font-black text-[#007aff] mb-1">1700万+</div>
+          <div class="text-sm text-[#86868b]">服务师生</div>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea]">
+          <div class="text-3xl font-black text-[#007aff] mb-1">9亿+</div>
+          <div class="text-sm text-[#86868b]">资源应用</div>
+        </div>
+        <div class="text-center p-6 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea]">
+          <div class="text-3xl font-black text-[#007aff] mb-1">40亿+</div>
+          <div class="text-sm text-[#86868b]">互动学习</div>
+        </div>
+      </div>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-8.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/intro-9.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 强师 ===== -->
+  <section id="teacher" class="relative py-28 bg-[#f5f5f7] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">Empower Teacher</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">强师：体系化资源 + 学科 Agent</h2>
+        <p class="text-lg text-[#aeaeb2] max-w-3xl">AI 赋能教育者：全链路资源贯通 + 学科 Agent 智能助教，成就名师。80万+ 教师用户，周均 5.4 次；教学设计减负 61%，课件制作提效 64%，活跃率 88.4%。</p>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teacher-1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teacher-2.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teacher-3.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teacher-4.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="p-7 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-11 h-11 rounded-lg bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="book-open" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-[#1d1d1f] mb-2">资源贯通</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">正版电子课本、100万+精选资源、1.5亿+题库、200万+中高考卷库，覆盖同步、复习、备考、培优全场景。</p>
+        </div>
+        <div class="p-7 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-11 h-11 rounded-lg bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="video" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-[#1d1d1f] mb-2">名师课程</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">特级教师、清北名师领衔打造，到书到课到专题，兼顾课前铺垫、课中深耕、课后升华。</p>
+        </div>
+        <div class="p-7 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-11 h-11 rounded-lg bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="bot" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-[#1d1d1f] mb-2">学科 Agent</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">学情课件创编、情景活动创设、出题组卷、文言文教学、英语听力训练、理化实验等专属智能体。</p>
+        </div>
+        <div class="p-7 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-11 h-11 rounded-lg bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="layers" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-[#1d1d1f] mb-2">分层题包</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">5万+"基础层+提升层"双题包，AI 划题一键生成个人专属作业资源池。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 强教 ===== -->
+  <section id="teach" class="relative py-28 bg-[#ffffff] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="mb-16 reveal">
+        <span class="text-[#ff9f0a] font-bold tracking-[0.15em] text-xs uppercase">Empower Teaching</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">强教：AI 重构课堂主阵地</h2>
+        <p class="text-lg text-[#aeaeb2] max-w-3xl">师机生三元互动，全要素靶向辅导，以学定教。覆盖备课、授课、作业、批改、辅导全链路。</p>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-2.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-3.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <video src="images/teach-video.mp4" controls autoplay muted loop playsinline class="w-full h-auto rounded-xl"></video>
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-4.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-5.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/teach-6.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-[#f5f5f7] text-[#ff9f0a] flex items-center justify-center"><i data-lucide="monitor-play" class="w-5 h-5"></i></div>
+            <h4 class="font-bold text-lg text-[#1d1d1f]">AI 授课</h4>
+          </div>
+          <p class="text-[#86868b] leading-relaxed">学科智能体入课，情境创设+任务驱动；全班作答实时反馈，教学策略动态调整，让课堂从"听讲"变"探索"。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-[#f5f5f7] text-[#ff9f0a] flex items-center justify-center"><i data-lucide="file-text" class="w-5 h-5"></i></div>
+            <h4 class="font-bold text-lg text-[#1d1d1f]">AI 作业</h4>
+          </div>
+          <p class="text-[#86868b] leading-relaxed">全学科、全题型、全要素（听说读写），支持同步作业、AI 阅读、听说作业、AI 写作及数智作业本分层推送。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-[#f5f5f7] text-[#ff9f0a] flex items-center justify-center"><i data-lucide="check-square" class="w-5 h-5"></i></div>
+            <h4 class="font-bold text-lg text-[#1d1d1f]">AI 批改</h4>
+          </div>
+          <p class="text-[#86868b] leading-relaxed">随拍随批、步骤级批改、错因诊断、类人面批；高中 9 大学科拍批与答疑支持。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-lg bg-[#f5f5f7] text-[#ff9f0a] flex items-center justify-center"><i data-lucide="layout-dashboard" class="w-5 h-5"></i></div>
+            <h4 class="font-bold text-lg text-[#1d1d1f]">AI 靶向辅导</h4>
+          </div>
+          <p class="text-[#86868b] leading-relaxed">学情数据驱动、分层讲评、差异化推送、立体化辅导；靶向作业、错题重做、同类推送、作文面批、范文推荐。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 强学 ===== -->
+  <section id="learn" class="relative py-28 bg-[#fbfbfd] overflow-hidden">
+    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px); background-size: 32px 32px;"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative">
+      <div class="mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">Empower Learning</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">强学：激发学习内驱力</h2>
+        <p class="text-lg text-[#86868b] max-w-3xl">AI 激发学习者内驱力：问题导向 + 任务驱动 + 日周月链路成长，打造千人千面的自适应学习体验。</p>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/learn-1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/learn-2.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/learn-3.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/learn-4.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-12 h-12 rounded-xl bg-sky-600/20 text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="brain" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-lg mb-2">AI 精准学</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">知识图谱定位薄弱点，智能推荐学习路径，千人千面自适应学习，让每个学生都有自己的学习节奏。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7]0/20 text-amber-300 flex items-center justify-center mb-4"><i data-lucide="refresh-cw" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-lg mb-2">错题闭环</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">AI 自动收录错题，智能归类、举一反三、同类推送，形成"练习-诊断-巩固-提升"的完整学习闭环。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7]0/20 text-coral-300 flex items-center justify-center mb-4"><i data-lucide="trending-up" class="w-6 h-6"></i></div>
+          <h4 class="font-bold text-lg mb-2">日周月成长</h4>
+          <p class="text-sm text-[#86868b] leading-relaxed">日清日结、周测周练、月考分析，可视化学习轨迹，让进步看得见，激发持续学习动力。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 竞品差异 ===== -->
+  <section id="diff" class="relative py-28 bg-[#f5f5f7] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">Advantage</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">竞品差异 &amp; 核心优势</h2>
+        <p class="text-lg text-[#aeaeb2] max-w-3xl">基于全量竞品分析，从备课、授课、作业、资源、AI 辅学到学情分析，看智慧课堂 6.0 如何构建差异化竞争力。</p>
+      </div>
+
+      <!-- 全新：四竞品多维对比表 -->
+      <div class="bg-[#ffffff] rounded-2xl border border-[#e5e5ea] overflow-hidden mb-12 reveal">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm min-w-[800px]">
+            <thead>
+              <tr class="bg-[#f5f5f7]">
+                <th class="text-left py-3 px-4 font-semibold text-[#86868b] w-[100px] border-b border-[#e5e5ea]">维度</th>
+                <th class="text-left py-3 px-4 font-bold w-[150px] border-b border-[#e5e5ea]">
+                  <div class="flex items-center gap-2">
+                    <img src="images/competitors/iflytek.png" style="height:22px;width:auto;border-radius:4px;" alt="讯飞" />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-indigo-300">讯飞智慧课堂</span>
+                  </div>
+                </th>
+                <th class="text-left py-3 px-4 font-medium text-[#86868b] border-b border-[#e5e5ea]">
+                  <div class="flex items-center gap-2">
+                    <img src="images/competitors/seewo.svg" style="width:22px;height:22px;border-radius:4px;" alt="希沃" onerror="this.style.display='none'" />
+                    <span>希沃易课堂</span>
+                  </div>
+                </th>
+                <th class="text-left py-3 px-4 font-medium text-[#86868b] border-b border-[#e5e5ea]">
+                  <div class="flex items-center gap-2">
+                    <img src="images/competitors/mukun.svg" style="width:22px;height:22px;border-radius:4px;" alt="沐坤" onerror="this.style.display='none'" />
+                    <span>沐坤</span>
+                  </div>
+                </th>
+                <th class="text-left py-3 px-4 font-medium text-[#86868b] border-b border-[#e5e5ea]">
+                  <div class="flex items-center gap-2">
+                    <img src="images/competitors/xiaolu.svg" style="width:22px;height:22px;border-radius:4px;" alt="小鹿爱学" onerror="this.style.display='none'" />
+                    <span>小鹿爱学</span>
+                  </div>
+                </th>
+                <th class="text-left py-3 px-4 font-medium text-[#86868b] border-b border-[#e5e5ea]">
+                  <div class="flex items-center gap-2">
+                    <img src="images/competitors/fuli.svg" style="width:22px;height:22px;border-radius:4px;" alt="辅立码课" onerror="this.style.display='none'" />
+                    <span>辅立码课</span>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">备课</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">强</span><br/><span class="text-xs text-[#86868b]">课本课件试题作业学情全贯通，版本覆盖度高</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：课件多（单课时20+），备课工具丰富</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：火花+一起作业三方资源</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">弱：聚焦测练推荐，非备授课</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">—</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">授课</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">强</span><br/><span class="text-xs text-[#86868b]">课堂活动、师生互动、学科工具、AI入课</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：课堂活动丰富，白板及动态资源好</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：学科工具较少</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">弱：对教师依赖低，聚焦测练</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">—</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">作业</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">强</span><br/><span class="text-xs text-[#86868b]">自建题库、题量大更新快、三新资源、听说读写练测全覆盖</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：自有题库版本覆盖少，外部对接学科网</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：一起作业+学科网</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：自适应测评题、同步试题丰富、配套微课精美</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：6万+高考视频课程</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">资源</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">强</span><br/><span class="text-xs text-[#86868b]">正版教材、100万+资源、1.5亿+题库、名师课程</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：外接清北道远，资源丰富</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">弱：以教师引导学为主</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：45万+AI课、10万+母题、清北名师真人课</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">弱：以教师引导学为主</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">AI 辅学</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">强</span><br/><span class="text-xs text-[#86868b]">AI精准学、AI批改、AI阅读、AI写作、AI问答、AI心理、听口训练</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：作文批改+个性化推荐</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">—</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：AI精准学、作文辅导、学习激励</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">弱：无AI答疑能力，硬接DeepSeek</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">学情分析</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">中</span><br/><span class="text-xs text-[#86868b]">全场景学情数据，校内外图谱持续推进</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：以教师引导学为主，自主学链路待打通</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：以教师引导学学情为主</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">中：以学生自主学学情为主</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">强：同步到备考数据链路较为完善</td>
+              </tr>
+              <tr class="hover:bg-[#f5f5f7]/50">
+                <td class="py-3 px-4 font-bold text-[#1d1d1f]">市场定位</td>
+                <td class="py-3 px-4 text-[#1d1d1f]"><span class="font-medium text-[#007aff]">教师引导+学生自主学全链路闭环</span></td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">依托大屏客户基础与大小屏互动体验，UGC课件资源丰富</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">多硬件可对接的开放策略，接入火花学苑等三方资源</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">聚焦学生自主精准学，提供清北名师课程与配套测评</td>
+                <td class="py-3 px-4 text-[#86868b] text-xs">聚焦高中培优，课后作业测练辅导答疑切入</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 核心优势 -->
+      <div class="grid md:grid-cols-2 gap-8 mb-16">
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <h3 class="text-xl font-bold text-[#1d1d1f] mb-4">讯飞差异化优势</h3>
+          <ul class="space-y-4">
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">1</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">全学段正版教材</strong> — 人教社等主流出版社官方授权，集成省市级三级资源库、新高考题库</span></li>
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">2</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">国际领先 AI 技术</strong> — 星火大模型语文/英语作文智能批改+评分+修改建议，数学主观题秒批+错因分析</span></li>
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">3</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">知识图谱+数据闭环</strong> — 基于5.8万校数据，"诊-学-练-评"全链路闭环</span></li>
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">4</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">全场景数据联动</strong> — 与智学网、精准教学系统、AI实验室系统账号互通，打通"建、用、研、评"</span></li>
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">5</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">软硬解耦</strong> — 支持讯飞、华为、联想等多品牌硬件，适配不同信息化建设程度</span></li>
+            <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-[#f5f5f7] text-[#007aff] text-xs flex items-center justify-center shrink-0 mt-0.5">6</span><span class="text-sm text-[#86868b] leading-relaxed"><strong class="text-[#1d1d1f]">深耕教育 21 年</strong> — 联合实验室、蓝皮书、5.8万校活跃应用，1.2万人专业团队本地化服务</span></li>
+          </ul>
+        </div>
+
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover reveal">
+          <h3 class="text-xl font-bold text-[#1d1d1f] mb-4">竞品竞争现状</h3>
+          <ul class="space-y-5">
+            <li>
+              <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-[#f5f5f7]0"></span><span class="font-bold text-[#1d1d1f] text-sm">希沃易课堂</span></div>
+              <p class="text-xs text-[#86868b] leading-relaxed pl-4">依托大屏客户覆盖、用户运营优势推广小屏，大小屏互动性较好，UGC课件丰富，小学学段有优势。</p>
+            </li>
+            <li>
+              <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-[#f5f5f7]0"></span><span class="font-bold text-[#1d1d1f] text-sm">沐坤</span></div>
+              <p class="text-xs text-[#86868b] leading-relaxed pl-4">采用多硬件可对接的开放策略，接入火花学苑、一起、NB实验等三方优质内容资源。</p>
+            </li>
+            <li>
+              <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-[#f5f5f7]0"></span><span class="font-bold text-[#1d1d1f] text-sm">小鹿爱学</span></div>
+              <p class="text-xs text-[#86868b] leading-relaxed pl-4">聚焦学生自主精准学方向，提供清北名师课程与测评题，满足学业提升诉求。</p>
+            </li>
+            <li>
+              <div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span><span class="font-bold text-[#1d1d1f] text-sm">辅立码课</span></div>
+              <p class="text-xs text-[#86868b] leading-relaxed pl-4">聚焦高中培优场景，以课后作业测练辅导及微课答疑为特色，支持自建习题与知识点分析。</p>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 reveal">
+        <div class="p-8 rounded-2xl bg-[#ffffff] text-white">
+          <div class="w-12 h-12 rounded-2xl bg-[#e8e8ed] flex items-center justify-center mb-4"><i data-lucide="repeat" class="w-6 h-6 text-[#007aff]"></i></div>
+          <h3 class="text-xl font-bold mb-4">校内外学情链路闭环</h3>
+          <ul class="space-y-3 text-[#86868b] text-sm">
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#007aff] shrink-0 mt-0.5"></i><span>学生自主闭环：AI 精准学、错题收录、AI 答疑、举一反三</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#007aff] shrink-0 mt-0.5"></i><span>教师引导闭环：课堂讲评、分层作业、智能批改、靶向辅导</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#007aff] shrink-0 mt-0.5"></i><span>同步校内进度，个性化补差培优，教师与学生双驱动</span></li>
+          </ul>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] text-white">
+          <div class="w-12 h-12 rounded-2xl bg-[#f5f5f7] flex items-center justify-center mb-4"><i data-lucide="bar-chart-3" class="w-6 h-6 text-[#ff9f0a]"></i></div>
+          <h3 class="text-xl font-bold mb-4">数据赋能管理决策</h3>
+          <ul class="space-y-3 text-[#86868b] text-sm">
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#ff9f0a] shrink-0 mt-0.5"></i><span>覆盖信息化建设、教室、学科、学生多维分析</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#ff9f0a] shrink-0 mt-0.5"></i><span>学情预警、薄弱点分析、教学质量关联性分析</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-[#ff9f0a] shrink-0 mt-0.5"></i><span>让"教、学、辅、管、评"全流程可视、可管、可优化</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- ===== 上海案例分享 ===== -->
+  <section id="shanghai" class="relative py-28 bg-[#ffffff] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="mb-16 reveal">
+        <span class="text-[#ff9f0a] font-bold tracking-[0.15em] text-xs uppercase">Shanghai Case</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">讯飞智慧课堂优秀案列分享</h2>
+        <p class="text-lg text-[#aeaeb2] max-w-3xl">截止目前，讯飞已服务上海1000+中小学校、200万+师生、打造30+应用示范校园，与上海市"三个助手"数据打通，共促数字教育高质量发展。</p>
+        <div class="grid grid-cols-1 gap-6 mt-10 reveal">
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/shanghai-1.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/shanghai-2.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/shanghai-3.png" alt="" class="w-full h-auto">
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow w-full">
+            <img src="images/shanghai-4.png" alt="" class="w-full h-auto">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 reveal">
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7] text-[#007aff] flex items-center justify-center mb-4"><i data-lucide="school" class="w-6 h-6"></i></div>
+          <h3 class="text-xl font-bold text-[#1d1d1f] mb-3">学校概况</h3>
+          <p class="text-sm text-[#86868b] leading-relaxed mb-4">上海实验学校作为上海市教育信息化标杆校，始终走在教育数字化转型的前沿。学校全面部署智慧课堂 6.0 系统，覆盖全部年级和学科，实现了教学全场景的数字化升级。</p>
+          <p class="text-sm text-[#86868b] leading-relaxed">从课堂教学数据采集到学情分析报告，从智能备课到自适应作业，智慧课堂正在深刻改变学校的教学生态。</p>
+        </div>
+        <div class="p-8 rounded-2xl bg-[#f5f5f7] border border-[#e5e5ea] card-hover">
+          <div class="w-12 h-12 rounded-xl bg-[#f5f5f7] text-[#ff9f0a] flex items-center justify-center mb-4"><i data-lucide="target" class="w-6 h-6"></i></div>
+          <h3 class="text-xl font-bold text-[#1d1d1f] mb-3">实践成效</h3>
+          <ul class="space-y-3 text-sm text-[#86868b]">
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><span><strong>教师使用率 92%</strong> — 全校教师常态化使用智慧课堂授课</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><span><strong>日均使用 7.8h</strong> — 终端设备在教学时间内的深度应用</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><span><strong>备课效率提升 89%</strong> — AI 智能备课让教师从重复劳动中解放</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><span><strong>课堂互动提升 76%</strong> — 师生互动、生生互动更加高效</span></li>
+            <li class="flex gap-3"><i data-lucide="check-circle-2" class="w-5 h-5 text-sky-500 shrink-0 mt-0.5"></i><span><strong>个性化学习覆盖 100%</strong> — 自适应作业为每位学生量身定制</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-12 p-8 rounded-2xl bg-[#ffffff] text-white reveal">
+        <div class="flex items-start gap-4">
+          <div class="w-3 h-12 rounded-full bg-sky-400 shrink-0"></div>
+          <div>
+            <p class="text-lg leading-relaxed text-[#1d1d1f] italic">"自适应作业是我最喜欢的功能，每个学生拿到的作业都不一样，真正做到了因材施教。学生们学习积极性明显提高，成绩也有了显著进步。"</p>
+            <p class="mt-4 text-sm text-[#86868b]">—— 上海实验学校 · 教学副校长</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Timeline ===== -->
+  <section id="timeline" class="relative py-28 bg-[#f5f5f7] overflow-hidden">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">Journey</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">智慧课堂发展历程</h2>
+        <p class="text-lg text-[#86868b]">从语音技术进课堂，到教育专属大模型驱动的人机共育。</p>
+      </div>
+      <div class="relative timeline-line space-y-12">
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center font-bold z-10">起</span>
+          <div class="pl-14 md:pl-8 md:w-5/12"><div class="font-bold text-[#1d1d1f] text-lg">2007 启航</div><p class="text-[#86868b] text-sm">"梦园"启航，全国首个应用语音技术助力课堂教学。</p></div>
+        </div>
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"><div class="font-bold text-[#1d1d1f] text-lg">2011-2012</div><p class="text-[#86868b] text-sm">智慧课堂 1.0 畅言交互式多媒体教学系统服务全国"班班通"。</p></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-sand-200 text-[#1d1d1f] text-xs flex items-center justify-center font-bold z-10">1.0</span>
+          <div class="pl-14 md:pl-8 md:w-5/12 md:hidden"><div class="font-bold text-[#1d1d1f] text-lg">2011-2012</div><p class="text-[#86868b] text-sm">智慧课堂 1.0 畅言交互式多媒体教学系统服务全国"班班通"。</p></div>
+        </div>
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-sand-200 text-[#1d1d1f] text-xs flex items-center justify-center font-bold z-10">2.0</span>
+          <div class="pl-14 md:pl-8 md:w-5/12"><div class="font-bold text-[#1d1d1f] text-lg">2015-2017</div><p class="text-[#86868b] text-sm">智慧课堂 2.0 软硬件融合应用，引领教育信息化建设。</p></div>
+        </div>
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"><div class="font-bold text-[#1d1d1f] text-lg">2022</div><p class="text-[#86868b] text-sm">发布智慧课堂 5.0，发布第一代智慧窗与智慧黑板。</p></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-sand-200 text-[#1d1d1f] text-xs flex items-center justify-center font-bold z-10">5.0</span>
+          <div class="pl-14 md:pl-8 md:w-5/12 md:hidden"><div class="font-bold text-[#1d1d1f] text-lg">2022</div><p class="text-[#86868b] text-sm">发布智慧课堂 5.0，发布第一代智慧窗与智慧黑板。</p></div>
+        </div>
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-[#f5f5f7]0 text-white text-xs flex items-center justify-center font-bold z-10">AI</span>
+          <div class="pl-14 md:pl-8 md:w-5/12"><div class="font-bold text-[#1d1d1f] text-lg">2023-2025</div><p class="text-[#86868b] text-sm">星火教师助手、星火智慧黑板、"师生机"三元教学模式亮相世界数字教育大会。</p></div>
+        </div>
+        <div class="relative md:flex items-center justify-between reveal">
+          <div class="hidden md:block w-5/12 text-right pr-8"><div class="font-bold text-[#1d1d1f] text-lg">2026</div><p class="text-[#86868b] text-sm">发布智慧课堂 6.0，强师·强教·强学，迈向人机共育新阶段。</p></div>
+          <span class="absolute left-[18px] md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-[#f5f5f7]0 text-white text-xs flex items-center justify-center font-bold z-10">6.0</span>
+          <div class="pl-14 md:pl-8 md:w-5/12 md:hidden"><div class="font-bold text-[#1d1d1f] text-lg">2026</div><p class="text-[#86868b] text-sm">发布智慧课堂 6.0，强师·强教·强学，迈向人机共育新阶段。</p></div>
+        </div>
+      </div>
+        <div style="margin-top: 40px; background: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e5e5ea;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+            <thead>
+              <tr style="background: #007aff; color: #fff;">
+                <th style="padding: 12px; text-align: center; width: 60px; font-weight: 600;">月份</th>
+                <th style="padding: 12px; text-align: left; font-weight: 600;">功能更新</th>
+                <th style="padding: 12px; text-align: center; width: 80px; font-weight: 600;">覆盖</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">1月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">高中语文智作文（题库选题+自主命题+逐句点评）；题库互动支持数学主观题智批改；授课助手APP移动备课；AI阅读沉浸式功能；AI学作文学生自主拍照批改</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">2月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">作业融合数智作业列表/报告/讲评；中英文朗读/评测更新语音引擎；授课助手APP上线云盘；AI阅读新增30本书</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">3月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">题库互动统一发题流程；AI英语听说专练上新；AI单元复习教材上新</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">4月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">AI拍批扩初中九大主学科；授课助手跨终端体验升级；文科桌面升级；AI答疑拓全学科</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">5月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">课堂讲评组件易用性升级；6.0 UI升级；错题本新增知识点视图；中高考备考/AI单元复习资源上新</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+              <tr style="border-bottom: 1px solid #f0f0f2;">
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">6月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">学情组合统一课堂题库及多端交互；授课助手iOS端备课；错题库布置在线作业</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px 12px; text-align: center; font-weight: 700; color: #007aff;">7月</td>
+                <td style="padding: 10px 12px; color: #1d1d1f;">课堂题库AI搜题（图片搜题）；语文智作文引擎升级；AI拍批扩高中全学科；OS学伴升级</td>
+                <td style="padding: 10px 12px; text-align: center;"><span style="display:inline-block;background:#e8f0fe;color:#007aff;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">教师</span> <span style="display:inline-block;background:#fef3e2;color:#ff9f0a;font-size:11px;padding:1px 8px;border-radius:4px;font-weight:600;">学生</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </div>
+  </section>
+
+  <!-- ===== AI+教育时代的钢铁侠 ===== -->
+  <section id="ironman" class="relative py-28 bg-[#ffffff] overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="mb-16 reveal">
+        <span class="text-[#007aff] font-bold tracking-[0.15em] text-xs uppercase">AI+HUMAN</span>
+        <h2 class="text-4xl font-black text-[#1d1d1f] mt-2 mb-4">AI+教育时代的"钢铁侠"</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+          <div class="rounded-2xl overflow-hidden bg-[#f5f5f7]">
+            <video src="images/ironman-video-1.mp4" autoplay loop muted playsinline class="w-full h-auto block"></video>
+          </div>
+          <div class="rounded-2xl overflow-hidden bg-[#f5f5f7]">
+            <video src="images/ironman-video-2.mp4" autoplay loop muted playsinline class="w-full h-auto block"></video>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="bg-[#f5f5f7] rounded-2xl overflow-hidden reveal">
+            <div class="px-6 pt-6 pb-3">
+              <div class="flex items-center gap-3 mb-1">
+                <span class="w-3 h-3 rounded-full bg-[#007aff] flex-shrink-0"></span>
+                <h3 class="text-xl font-bold text-[#1d1d1f]">数字驾驶舱OTA升级</h3>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <img src="images/ironman-2.png" alt="" class="w-full h-auto rounded-xl shadow-sm" />
+            </div>
+          </div>
+          <div class="bg-[#f5f5f7] rounded-2xl overflow-hidden reveal">
+            <div class="px-6 pt-6 pb-3">
+              <div class="flex items-center gap-3 mb-1">
+                <span class="w-3 h-3 rounded-full bg-[#007aff] flex-shrink-0"></span>
+                <h3 class="text-xl font-bold text-[#1d1d1f]">链接学生内心世界的桥梁</h3>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <img src="images/ironman-3.png" alt="" class="w-full h-auto rounded-xl shadow-sm" />
+            </div>
+          </div>
+          <div class="bg-[#f5f5f7] rounded-2xl overflow-hidden reveal">
+            <div class="px-6 pt-6 pb-3">
+              <div class="flex items-center gap-3 mb-1">
+                <span class="w-3 h-3 rounded-full bg-[#007aff] flex-shrink-0"></span>
+                <h3 class="text-xl font-bold text-[#1d1d1f]">人人都可以成为"贾维斯"</h3>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <img src="images/ironman-5.png" alt="" class="w-full h-auto rounded-xl shadow-sm" />
+            </div>
+          </div>
+          <div class="bg-[#f5f5f7] rounded-2xl overflow-hidden reveal">
+            <div class="px-6 pt-6 pb-3">
+              <div class="flex items-center gap-3 mb-1">
+                <span class="w-3 h-3 rounded-full bg-[#007aff] flex-shrink-0"></span>
+                <h3 class="text-xl font-bold text-[#1d1d1f]">传统作业不再传统，再见了重复作业</h3>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <img src="images/ironman-1.png" alt="" class="w-full h-auto rounded-xl shadow-sm" />
+            </div>
+          </div>
+          <div class="bg-[#f5f5f7] rounded-2xl overflow-hidden reveal md:col-span-2">
+            <div class="px-6 pt-6 pb-3">
+              <div class="flex items-center gap-3 mb-1">
+                <span class="w-3 h-3 rounded-full bg-[#007aff] flex-shrink-0"></span>
+                <h3 class="text-xl font-bold text-[#1d1d1f]">清北你好，请叫我创新拔尖人才</h3>
+              </div>
+            </div>
+            <div class="px-6 pb-6">
+              <img src="images/ironman-4.png" alt="" class="w-full h-auto rounded-xl shadow-sm" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="relative py-28 bg-[#fbfbfd] overflow-hidden">
+    <div class="absolute inset-0" style="background-image: url('images/cta-bg.png'); background-size: cover; background-position: center; opacity: 0.15;"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#ffffff]/10 border border-[#e5e5ea] text-[#007aff] text-sm font-medium mb-8 reveal">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+        未来已来
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-black text-[#1d1d1f] mb-6 reveal">从教学工具到育人伙伴</h2>
+      <p class="text-lg sm:text-xl text-[#86868b] leading-relaxed mb-10 reveal">科大讯飞智慧课堂 6.0 以教育专属大模型为底座，构建"强师、强教、强学"的教育新生态，助力学校打造未来课堂、未来学习、未来学校，形成持续发展的教育竞争力。</p>
+      <a href="#hero" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#1d1d1f] text-white font-bold hover:bg-[#007aff] transition-colors shadow-lg reveal">
+        回到顶部
+        <i data-lucide="arrow-up" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </section>
+
+  <footer class="py-8 bg-[#f5f5f7] text-[#86868b] text-sm text-center">
+    基于《智慧课堂6.0汇报胶片（标准版）》整理 · 科大讯飞智慧课堂 · 产品介绍页
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const nav = document.getElementById('navbar');
+    const logo = nav.querySelector('.nav-logo');
+    const links = nav.querySelector('.nav-links');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY > 40;
+      nav.classList.toggle('nav-scrolled', scrolled);
+      logo.classList.toggle('text-[#1d1d1f]', scrolled);
+      logo.classList.toggle('text-[#1d1d1f]', !scrolled);
+      if (links) {
+        links.classList.toggle('text-[#86868b]', scrolled);
+        links.classList.toggle('text-[#1d1d1f]', !scrolled);
+      }
+    }, { passive: true });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) { entry.target.classList.add('active'); revealObserver.unobserve(entry.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => revealObserver.observe(el));
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.defaults({ duration: 0.7, ease: 'power2.out' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+      const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      heroTl.from('#hero .inline-flex', { y: 30, autoAlpha: 0, duration: 0.8 })
+        .from('#hero h1', { y: 50, autoAlpha: 0, duration: 1 }, '-=0.5')
+        .from('#hero h1 + p', { y: 30, autoAlpha: 0, duration: 0.8 }, '-=0.6')
+        .from('#hero p.text-\[#86868b\]', { y: 30, autoAlpha: 0, duration: 0.8 }, '-=0.5')
+        .from('#hero .flex a', { y: 20, autoAlpha: 0, stagger: 0.12, duration: 0.6 }, '-=0.4');
+      gsap.to('.hero-bg', { backgroundPositionY: '30%', ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+    }
+  </script>
+</body>
+</html>
